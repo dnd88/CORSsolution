@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Store">
+	
+	<resultMap type="StoreVO" id="storeResultMap">
+		<result property="storeId" column="store_id" jdbcType="INTEGER"/>
+		<result property="storeDesc" column="store_desc" jdbcType="VARCHAR"/>
+		<result property="storeImgUrl" column="store_img_url" jdbcType="VARCHAR"/>
+		<result property="storeTel" column="store_tel" jdbcType="VARCHAR"/>
+		<result property="storeName" column="store_name" jdbcType="VARCHAR"/>
+		<result property="storeRunningTime" column="store_running_time" jdbcType="VARCHAR"/>
+		<result property="storeAddr" column="store_addr" jdbcType="VARCHAR"/>
+		<result property="storeLongitude" column="store_longitude" jdbcType="VARCHAR"/>
+		<result property="storeLatitude" column="store_latitude" jdbcType="VARCHAR"/>
+				
+	</resultMap>
+	
+	<!-- list -->
+	<select id="selectStoreAllList" parameterType="StoreVO" resultMap="storeResultMap">
+		SELECT 
+			STORE_TB.store_id,
+			store_name,
+			store_desc,
+			store_img_url,
+			store_tel,
+			store_running_time,
+			store_addr,
+			store_longitude,
+			store_latitude
+		FROM 
+			STORE_TB JOIN STORE_LOCATION_TB
+			ON STORE_TB.store_id = STORE_LOCATION_TB.store_id			
+	</select>
+	
+	<!-- all info -->
+	<select id="selectStoreOne" parameterType="StoreVO" resultMap="storeResultMap">
+		SELECT 
+			STORE_TB.store_id,
+			store_desc,
+			store_img_url,
+			store_tel,
+			store_name,
+			store_running_time,
+			store_addr,
+			store_longitude,
+			store_latitude
+		FROM 
+				STORE_TB 
+			JOIN 
+				STORE_LOCATION_TB
+			ON 
+				STORE_TB.store_id = STORE_LOCATION_TB.store_id
+		WHERE STORE_TB.store_id = #{storeId}  		
+	</select>
+	
+
+</mapper>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/team_six/User_login.do" method="post">
+		로그인<br> 
+		id::<input type="text" name="userId"><br>
+		pw::<input type="text" name="userPassword"><br>
+		<br>
+		<button type="submit">log in</button>
+		
+	</form>
+	
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function(){
+	
+	checkLogin();
+	
+	
+});
+
+	function checkLogin(){
+		var oReq = new XMLHttpRequest();
+	    oReq.addEventListener("load", function(e){
+	            var htData  = JSON.parse(oReq.responseText);
+	            console.log(htData);
+	            alert(htData.flag);
+	     
+	    });
+	    oReq.open("GET", "/team_six/User_checkLogin.do");
+	    oReq.send(); 
+	}
+</script>	
+</body>
+</html>

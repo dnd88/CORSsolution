@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Proto">
+	
+	<resultMap type="ProtoVO" id="protoResultMap">
+		<result property="testId" column="test_id" jdbcType="VARCHAR"/>
+		<result property="testName" column="test_name" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+	
+	<insert id="insertTest" parameterType="ProtoVO">
+		INSERT INTO 
+			TEST_TB
+		VALUES(
+			#{testId},
+			#{testName}
+		)
+	</insert>
+	
+	<select id="selectTest" parameterType="ProtoVO" resultMap="protoResultMap">
+		SELECT 
+			test_name
+		FROM 
+			TEST_TB
+		WHERE 
+			test_id = #{testId}		
+	</select>
+	
+	<select id="jsonTest" parameterType="ProtoVO" resultMap="protoResultMap">
+		SELECT
+			 * 
+		FROM 
+			TEST_TB 
+		WHERE 
+			test_id = #{testId}
+	</select>
+
+</mapper>

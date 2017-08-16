@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<form action="/team_six/Proto_insertTest.do" method="post" >
+		insert Test<br>
+		id::<input type="text" name="id"><br>
+		name::<input type="text" name="name"><br>
+		
+		<button type="submit">send</button>
+	</form>
+
+	<form id="jsonTestForm">
+		json Test<br>
+		id::<input type="text" name="id"><br>
+		
+		<button onclick="jsonTest()">go ajax</button>
+	</form>
+
+	<p id="resultSpot"></p>
+	<a href="/team_six/html/user/userRegister.html">아이디 등록하러가기</a>
+	<a href="/team_six/html/user/login.html">log in 하러가기</a>
+	
+	<button onclick="checkLogin()">login check</button>
+	<button onclick="logout()">log out</button>
+	<button onclick="storeList()">store list go</button>
+	
+	
+<script type="text/javascript">
+	function callAjax(url, callback, param){
+		var oReq = new XMLHttpRequest();
+	    oReq.addEventListener("load", function(e){
+	            var htData  = JSON.parse(oReq.responseText);
+	            console.log(htData);
+	            //alert(htData.rvo.testName);
+	            callback(htData.rvo.testName);
+	    });
+	    oReq.open("GET", url+"?id="+param);
+	    oReq.send(); 
+	}
+	
+	function jsonTest() {
+		var id = document.querySelector('#jsonTestForm input').value;
+		var url = "/team_six/Proto_jsonTest.do";
+		callAjax(url, doInnerHtml, id);
+	}
+	
+	function doAlert(param){
+		alert(param);
+	}
+	
+	function doInnerHtml(param){
+		var spot = document.querySelector('#resultSpot');
+		spot.innerHTML = param + " ";
+	}
+	
+	//check login
+	function checkLogin(){
+		var oReq = new XMLHttpRequest();
+	    oReq.addEventListener("load", function(e){
+	            var htData  = JSON.parse(oReq.responseText);
+	            console.log(htData);
+	            alert(htData.flag);
+	     
+	    });
+	    oReq.open("GET", "/team_six/User_checkLogin.do");
+	    oReq.send(); 
+	}
+
+	//log out
+	function logout(){
+		var oReq = new XMLHttpRequest();
+	    oReq.addEventListener("load", function(e){
+	            var htData  = JSON.parse(oReq.responseText);
+	            console.log(htData);
+	            //alert(htData.flag);
+	     
+	    });
+	    oReq.open("GET", "/team_six/User_logout.do");
+	    oReq.send(); 
+	}
+	
+	//json list go 
+	function storeList() {
+		var oReq = new XMLHttpRequest();
+	    oReq.addEventListener("load", function(e){
+	            var htData  = JSON.parse(oReq.responseText);
+	            console.log(htData.rvo);
+	            //alert(htData.flag);
+	     
+	    });
+	    oReq.open("GET", "/team_six/Store_selectStoreAllList.do");
+	    oReq.send(); 
+	}
+</script>
+</body>
+</html>
